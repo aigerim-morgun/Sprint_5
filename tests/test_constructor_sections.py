@@ -1,33 +1,30 @@
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import ConstructorPageLocators
+from urls import BASE_URL
+
 
 def test_open_buns_section(driver):
-
-    driver.get("https://stellarburgers.education-services.ru/")
-
-    WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(ConstructorPageLocators.BUNS_ACTIVE))
-
-    assert driver.find_element(*ConstructorPageLocators.BUNS_ACTIVE)
-
-
-def test_open_sauces_section(driver):
-
-    driver.get("https://stellarburgers.education-services.ru/")
+    driver.get(BASE_URL)
 
     driver.find_element(*ConstructorPageLocators.SAUCES_SECTION).click()
 
-    WebDriverWait(driver,10).until(expected_conditions.visibility_of_element_located(ConstructorPageLocators.SAUCES_ACTIVE))
+    driver.find_element(*ConstructorPageLocators.BUNS_SECTION).click()
 
-    assert "Соусы" in driver.page_source
+    assert WebDriverWait(driver, 5).until(expected_conditions.visibility_of_element_located(ConstructorPageLocators.BUNS_ACTIVE))
+
+
+def test_open_sauces_section(driver):
+    driver.get(BASE_URL)
+
+    driver.find_element(*ConstructorPageLocators.SAUCES_SECTION).click()
+
+    assert WebDriverWait(driver, 5).until(expected_conditions.visibility_of_element_located(ConstructorPageLocators.SAUCES_ACTIVE))
 
 
 def test_open_fillings_section(driver):
-
-    driver.get("https://stellarburgers.education-services.ru/")
+    driver.get(BASE_URL)
 
     driver.find_element(*ConstructorPageLocators.FILLINGS_SECTION).click()
 
-    WebDriverWait(driver,10).until(expected_conditions.visibility_of_element_located(ConstructorPageLocators.FILLINGS_ACTIVE))
-
-    assert "Начинки" in driver.page_source
+    assert WebDriverWait(driver, 5).until(expected_conditions.visibility_of_element_located(ConstructorPageLocators.FILLINGS_ACTIVE))

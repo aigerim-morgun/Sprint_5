@@ -1,42 +1,23 @@
 import pytest
-import random
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
-from tests.locators import RegisterPageLocators
-
-@pytest.fixture
-def generate_email():
-    number = random.randint(100, 999)
-    return f"aigerimmorgun36{number}@yandex.ru"
-
-
-@pytest.fixture
-def generate_password():
-    return str(random.randint(100000, 999999))
-
-
-@pytest.fixture
-def generate_short_password():
-    return str(random.randint(1000, 9999))
-
+from locators import RegisterPageLocators
+from helpers import generate_email, generate_password
+from urls import BASE_URL
 
 @pytest.fixture
 def driver():
     driver = webdriver.Chrome()
-
     yield driver
-
     driver.quit()
-
 
 @pytest.fixture
 def registered_user(driver):
-    email = f"aigerimmorgun36{random.randint(100,999)}@yandex.ru"
-    password = str(random.randint(100000,999999))
+    email = generate_email()
+    password = generate_password()
 
-    driver.get("https://stellarburgers.education-services.ru/")
-
+    driver.get(BASE_URL)
     driver.find_element(*RegisterPageLocators.LOGIN_BUTTON).click()
     driver.find_element(*RegisterPageLocators.REGISTER_LINK).click()
 
@@ -45,6 +26,6 @@ def registered_user(driver):
     driver.find_element(*RegisterPageLocators.PASSWORD_INPUT).send_keys(password)
     driver.find_element(*RegisterPageLocators.REGISTER_BUTTON).click()
 
-    WebDriverWait(driver, 10).until(expected_conditions.url_contains("login"))
+    WebDriverWait(driver, 10).until(expected_conditions.visibility_of_element_located(RegisterPageLocators.EMAIL_INPUT))
 
     return email, password

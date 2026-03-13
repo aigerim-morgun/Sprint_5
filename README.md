@@ -10,22 +10,24 @@
 
    Структура проекта:
 Sprint_5/
-  -conftest.py 
+  -locators.py
   -README.md
+  -helpers.py
+  -urls.py
   -tests/
-      -locators.py
       -test_login.py
       -test_logout.py
       -test_registration.py
       -test_profile_navigation.py
       -test_constructor_navigation.py
       -test_constructor_sections.py
+      -conftest.py
 
     
    Запуск тестов:
-Запуск всех тестов: pytest -s tests
-Запуск конкретного файла: pytest -s tests/test_login.py
-Запуск с подробным выводом: pytest -v tests
+Запуск всех тестов: PYTHONPATH=$(pwd) pytest -s tests/
+Запуск конкретного файла: PYTHONPATH=$(pwd) pytest -s tests/test_registration.py
+Запуск с подробным выводом: PYTHONPATH=$(pwd) pytest -v tests/
 
    Фикстуры:
 driver - создает и закрывает ChromeDriver;
